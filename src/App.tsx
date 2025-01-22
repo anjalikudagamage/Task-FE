@@ -1,7 +1,12 @@
 import "./App.css";
+import DashboardPage from "./components/pages/DashboardPage";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <DashboardPage />
+    </>
+  );
 }
 
 export default App;

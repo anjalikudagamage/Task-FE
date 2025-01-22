@@ -1,5 +1,5 @@
 import WidgetHeader from "../molecules/WidgetHeader";
-import EditableText from "../molecules/EditableText";
+import EditableText from "../atoms/EditableText";
 import { Widget } from "../../constants/types/WidgetTypes";
 
 interface WidgetProps extends Widget {

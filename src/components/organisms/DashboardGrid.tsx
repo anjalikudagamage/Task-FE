@@ -1,17 +1,26 @@
-import GridLayout from "react-grid-layout";
+import React from "react";
+import GridLayout, { Layout } from "react-grid-layout";
 import WidgetComponent from "./Widget";
 import { Widget } from "../../constants/types/WidgetTypes";
 
 interface DashboardGridProps {
   widgets: Widget[];
   onRemoveWidget: (id: string) => void;
+  onLayoutChange: (layout: Layout[]) => void; // Added this
 }
 
 const DashboardGrid: React.FC<DashboardGridProps> = ({
   widgets,
   onRemoveWidget,
+  onLayoutChange,
 }) => (
-  <GridLayout className="layout" cols={12} rowHeight={30} width={1200}>
+  <GridLayout
+    className="layout"
+    cols={12}
+    rowHeight={30}
+    width={1200}
+    onLayoutChange={onLayoutChange} // Pass this to GridLayout
+  >
     {widgets.map((widget) => (
       <div key={widget.id} data-grid={widget.layout}>
         <WidgetComponent {...widget} onRemove={onRemoveWidget} />
