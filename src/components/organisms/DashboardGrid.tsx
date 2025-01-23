@@ -19,7 +19,7 @@ const DashboardGrid: React.FC<DashboardGridProps> = ({
     cols={12}
     rowHeight={30}
     width={1200}
-    onLayoutChange={(layout) => onLayoutChange(layout)}
+    onLayoutChange={onLayoutChange}
   >
     {widgets.map((widget) => (
       <div key={widget.id} data-grid={widget.layout}>
