@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { WidgetHeader } from "../molecules/WidgetHeader";
+import { WidgetHeader } from "../../molecules/WidgetHeader";
+import { WidgetContainer, ItemList, ListItem, ItemText } from "./styles";
 
 const initialItems = [
   { id: 1, text: "Item 1", completed: false },
@@ -7,10 +8,15 @@ const initialItems = [
   { id: 3, text: "Item 3", completed: false },
 ];
 
-export const ItemListWidget: React.FC<{
+interface ItemListWidgetProps {
   onEdit: () => void;
   onRemove: () => void;
-}> = ({ onEdit, onRemove }) => {
+}
+
+export const ItemListWidget: React.FC<ItemListWidgetProps> = ({
+  onEdit,
+  onRemove,
+}) => {
   const [items, setItems] = useState(initialItems);
 
   const toggleComplete = (id: number) => {
@@ -22,19 +28,15 @@ export const ItemListWidget: React.FC<{
   };
 
   return (
-    <div className="widget item-list-widget">
+    <WidgetContainer>
       <WidgetHeader title="Item List" onEdit={onEdit} onRemove={onRemove} />
-      <ul>
+      <ItemList>
         {items.map((item) => (
-          <li
-            key={item.id}
-            onClick={() => toggleComplete(item.id)}
-            style={{ textDecoration: item.completed ? "line-through" : "none" }}
-          >
-            {item.text}
-          </li>
+          <ListItem key={item.id} onClick={() => toggleComplete(item.id)}>
+            <ItemText completed={item.completed}>{item.text}</ItemText>
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </ItemList>
+    </WidgetContainer>
   );
 };

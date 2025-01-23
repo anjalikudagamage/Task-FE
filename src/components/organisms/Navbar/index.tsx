@@ -2,11 +2,7 @@ import React from "react";
 import { Button, Toolbar, AppBar } from "@mui/material";
 import { useNavbarStyles } from "./styles";
 
-type WidgetType =
-  | "LineChartWidget"
-  | "TextBoxWidget"
-  | "ItemListWidget"
-  | "ImageWidget";
+type WidgetType = "LineChartWidget" | "TextBoxWidget" | "ItemListWidget";
 
 export const Navbar: React.FC<{ addWidget: (type: WidgetType) => void }> = ({
   addWidget,
@@ -24,9 +20,6 @@ export const Navbar: React.FC<{ addWidget: (type: WidgetType) => void }> = ({
         </Button>
         <Button sx={styles.button} onClick={() => addWidget("ItemListWidget")}>
           Add Item List
-        </Button>
-        <Button sx={styles.button} onClick={() => addWidget("ImageWidget")}>
-          Add Image
         </Button>
       </Toolbar>
     </AppBar>
