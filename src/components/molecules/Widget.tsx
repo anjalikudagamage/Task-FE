@@ -1,4 +1,4 @@
-import WidgetHeader from "../molecules/WidgetHeader";
+import WidgetHeader from "./WidgetHeader";
 import EditableText from "../atoms/EditableText";
 import { Widget } from "../../constants/types/WidgetTypes";
 

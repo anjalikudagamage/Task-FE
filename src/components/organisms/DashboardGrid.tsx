@@ -1,6 +1,6 @@
 import React from "react";
 import GridLayout, { Layout } from "react-grid-layout";
-import WidgetComponent from "./Widget";
+import WidgetComponent from "../molecules/Widget";
 import { Widget } from "../../constants/types/WidgetTypes";
 
 interface DashboardGridProps {
@@ -19,7 +19,7 @@ const DashboardGrid: React.FC<DashboardGridProps> = ({
     cols={12}
     rowHeight={30}
     width={1200}
-    onLayoutChange={onLayoutChange}
+    onLayoutChange={(layout) => onLayoutChange(layout)}
   >
     {widgets.map((widget) => (
       <div key={widget.id} data-grid={widget.layout}>
