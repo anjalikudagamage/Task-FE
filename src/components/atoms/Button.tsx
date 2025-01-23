@@ -7,7 +7,7 @@ interface ButtonProps {
 
 const StyledButton = styled.button`
   padding: 0.5rem 1rem;
-  background: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.primary || "#007bff"};
   color: white;
   border: none;
   border-radius: 4px;

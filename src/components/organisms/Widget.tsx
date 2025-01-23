@@ -12,7 +12,9 @@ const WidgetComponent: React.FC<WidgetProps> = ({
   content,
   onRemove,
 }) => (
-  <div style={{ border: "1px solid #ddd", padding: "1rem" }}>
+  <div
+    style={{ border: "1px solid #ddd", padding: "1rem", borderRadius: "4px" }}
+  >
     <WidgetHeader title={`Widget ${id}`} onRemove={() => onRemove(id)} />
     {type === "text" && <EditableText initialText={content as string} />}
     {type === "chart" && <div>Chart Placeholder</div>}

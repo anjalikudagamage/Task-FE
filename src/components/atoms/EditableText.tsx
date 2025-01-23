@@ -16,7 +16,9 @@ const EditableText: React.FC<EditableTextProps> = ({ initialText }) => {
       autoFocus
     />
   ) : (
-    <div onClick={() => setIsEditing(true)}>{text}</div>
+    <div onClick={() => setIsEditing(true)} style={{ cursor: "pointer" }}>
+      {text}
+    </div>
   );
 };
 

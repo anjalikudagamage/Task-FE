@@ -6,7 +6,7 @@ import { Widget } from "../../constants/types/WidgetTypes";
 interface DashboardGridProps {
   widgets: Widget[];
   onRemoveWidget: (id: string) => void;
-  onLayoutChange: (layout: Layout[]) => void; // Added this
+  onLayoutChange: (layout: Layout[]) => void;
 }
 
 const DashboardGrid: React.FC<DashboardGridProps> = ({
@@ -19,7 +19,7 @@ const DashboardGrid: React.FC<DashboardGridProps> = ({
     cols={12}
     rowHeight={30}
     width={1200}
-    onLayoutChange={onLayoutChange} // Pass this to GridLayout
+    onLayoutChange={onLayoutChange}
   >
     {widgets.map((widget) => (
       <div key={widget.id} data-grid={widget.layout}>

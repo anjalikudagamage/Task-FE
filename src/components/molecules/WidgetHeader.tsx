@@ -6,7 +6,13 @@ interface WidgetHeaderProps {
 }
 
 const WidgetHeader: React.FC<WidgetHeaderProps> = ({ title, onRemove }) => (
-  <div style={{ display: "flex", justifyContent: "space-between" }}>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    }}
+  >
     <h4>{title}</h4>
     <Button onClick={onRemove}>Remove</Button>
   </div>
