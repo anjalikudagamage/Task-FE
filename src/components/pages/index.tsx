@@ -12,14 +12,19 @@ const DashboardPage: React.FC = () => {
   const [widgets, setWidgets] = useState<
     { id: string; type: WidgetType; area: string }[]
   >([
-    { id: "lineChart", type: "LineChartWidget", area: "widgets" },
-    { id: "textBox", type: "TextBoxWidget", area: "widgets" },
-    { id: "itemList", type: "ItemListWidget", area: "widgets" },
+    // Default widgets: LineChart on the left, TextBox and ItemList on the right
+    { id: "lineChart1", type: "LineChartWidget", area: "left" },
+    { id: "textBox1", type: "TextBoxWidget", area: "right" },
+    { id: "itemList1", type: "ItemListWidget", area: "right" },
   ]);
 
   const addWidget = (widgetType: WidgetType): void => {
     const newWidgetId = `widget_${Date.now()}`;
-    const newWidget = { id: newWidgetId, type: widgetType, area: "widgets" };
+    const newWidget = {
+      id: newWidgetId,
+      type: widgetType,
+      area: widgetType === "LineChartWidget" ? "left" : "right",
+    };
     setWidgets([...widgets, newWidget]);
   };
 
@@ -68,7 +73,7 @@ const DashboardPage: React.FC = () => {
     <DashboardContainer>
       <Navbar addWidget={addWidget} />
       <Grid container spacing={2}>
-        {/* Left Side - Dashboard name and image */}
+        {/* Left Side - Dashboard name, image, and LineChart widgets */}
         <Grid item xs={6} spacing={2}>
           <Grid item xs={12}>
             <Paper elevation={3}>
@@ -84,28 +89,26 @@ const DashboardPage: React.FC = () => {
               </ImageArea>
             </Paper>
           </Grid>
-          {/* Line Chart Widget */}
-          <Grid item xs={12}>
-            <Paper elevation={3}>
-              {renderWidget({ id: "lineChart", type: "LineChartWidget" })}
-            </Paper>
-          </Grid>
+
+          {/* Render LineChartWidgets on the left side */}
+          {widgets.map((widget) =>
+            widget.area === "left" ? (
+              <Grid item xs={12} key={widget.id}>
+                <Paper elevation={3}>{renderWidget(widget)}</Paper>
+              </Grid>
+            ) : null
+          )}
         </Grid>
 
-        {/* Right Side - Widgets */}
+        {/* Right Side - TextBox and ItemList widgets */}
         <Grid container item xs={6} spacing={2}>
-          {/* Text Box Widget */}
-          <Grid item xs={12}>
-            <Paper elevation={3}>
-              {renderWidget({ id: "textBox", type: "TextBoxWidget" })}
-            </Paper>
-          </Grid>
-          {/* Item List Widget */}
-          <Grid item xs={12}>
-            <Paper elevation={3}>
-              {renderWidget({ id: "itemList", type: "ItemListWidget" })}
-            </Paper>
-          </Grid>
+          {widgets.map((widget) =>
+            widget.area === "right" ? (
+              <Grid item xs={12} key={widget.id}>
+                <Paper elevation={3}>{renderWidget(widget)}</Paper>
+              </Grid>
+            ) : null
+          )}
         </Grid>
       </Grid>
     </DashboardContainer>
