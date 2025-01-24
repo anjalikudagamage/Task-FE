@@ -1,52 +1,42 @@
 import styled from "styled-components";
 
 export const DashboardContainer = styled.div`
-  background-color: #f9f9f9;
+  background-color: #f5f5f5;
   padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
   min-height: 100vh;
   font-family: Arial, sans-serif;
+`;
+
+export const WidgetArea = styled.div`
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+
+  h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+    text-align: center;
+    color: #444;
+  }
 
   .layout {
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
+    display: flex;
+    flex-wrap: wrap;
+    background: #fafafa;
     border-radius: 8px;
-    padding: 8px;
+    gap: 8px;
   }
 
   .widget {
-    background: #ffffff;
-    border: 1px solid #dcdcdc;
+    background: #fefefe;
+    border: 1px solid #ccc;
     border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .widget-header {
-    background: #f0f0f0;
-    border-bottom: 1px solid #dcdcdc;
     padding: 8px;
-    cursor: grab;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .widget:hover {
-    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15);
-  }
-
-  .widget textarea {
-    border: none;
-    border-top: 1px solid #dcdcdc;
-    padding: 8px;
-    resize: none;
-    outline: none;
-    font-size: 14px;
-    font-family: inherit;
-    color: #333333;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   }
 `;
