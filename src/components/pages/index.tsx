@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Grid, Paper, Typography } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 import { ResizableBox } from "react-resizable";
 import { LineChartWidget } from "../organisms/LineChartWidget";
 import { TextBoxWidget } from "../organisms/TextBoxWidget";
 import { ItemListWidget } from "../organisms/ItemListWidget";
 import { Navbar } from "../organisms/Navbar";
-import { DashboardContainer, DashboardHeaderArea, ImageArea } from "./styles";
+import { DashboardContainer, ImageArea } from "./styles";
+import image from "../../assets/Images/image1.jpg";
 import "react-resizable/css/styles.css";
 
 type WidgetType = "LineChartWidget" | "TextBoxWidget" | "ItemListWidget";
@@ -40,7 +41,7 @@ const DashboardPage: React.FC = () => {
       case "LineChartWidget":
         content = (
           <LineChartWidget
-            onEdit={() => alert(`Editing ${widget.id}`)}
+            // onEdit={() => alert(`Editing ${widget.id}`)}
             onRemove={() => removeWidget(widget.id)}
           />
         );
@@ -48,7 +49,7 @@ const DashboardPage: React.FC = () => {
       case "TextBoxWidget":
         content = (
           <TextBoxWidget
-            onEdit={() => alert(`Editing ${widget.id}`)}
+            // onEdit={() => alert(`Editing ${widget.id}`)}
             onRemove={() => removeWidget(widget.id)}
           />
         );
@@ -56,7 +57,7 @@ const DashboardPage: React.FC = () => {
       case "ItemListWidget":
         content = (
           <ItemListWidget
-            onEdit={() => alert(`Editing ${widget.id}`)}
+            // onEdit={() => alert(`Editing ${widget.id}`)}
             onRemove={() => removeWidget(widget.id)}
           />
         );
@@ -90,14 +91,11 @@ const DashboardPage: React.FC = () => {
         <Grid item xs={6} spacing={2}>
           <Grid item xs={12}>
             <Paper elevation={3}>
-              <DashboardHeaderArea>
-                <Typography variant="h4">Dashboard Name</Typography>
-              </DashboardHeaderArea>
               <ImageArea>
                 <img
-                  src="path-to-image.jpg"
+                  src={image}
                   alt="Dashboard Image"
-                  style={{ width: "100%", height: "auto" }}
+                  style={{ width: "100%", height: "auto", maxHeight: "200px" }}
                 />
               </ImageArea>
             </Paper>

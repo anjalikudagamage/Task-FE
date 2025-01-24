@@ -17,20 +17,13 @@ const initialItems = [
 ];
 
 interface ItemListWidgetProps {
-  onEdit: () => void;
   onRemove: () => void;
 }
 
-export const ItemListWidget: React.FC<ItemListWidgetProps> = ({
-  onEdit,
-  onRemove,
-}) => {
+export const ItemListWidget: React.FC<ItemListWidgetProps> = ({ onRemove }) => {
   const [items, setItems] = useState(initialItems);
   const [isEditing, setIsEditing] = useState(false);
-  const [currentItem, setCurrentItem] = useState<{
-    id: number;
-    text: string;
-  } | null>(null);
+  const [editedItems, setEditedItems] = useState([...initialItems]);
 
   const toggleComplete = (id: number) => {
     setItems(
@@ -40,51 +33,48 @@ export const ItemListWidget: React.FC<ItemListWidgetProps> = ({
     );
   };
 
-  const handleEditClick = (item: { id: number; text: string }) => {
-    setCurrentItem(item);
+  const handleHeaderEdit = () => {
+    setEditedItems([...items]); // Clone current items for editing
     setIsEditing(true);
   };
 
   const handleEditSave = () => {
-    if (currentItem) {
-      setItems(
-        items.map((item) =>
-          item.id === currentItem.id
-            ? { ...item, text: currentItem.text }
-            : item
-        )
-      );
-      setIsEditing(false);
-      setCurrentItem(null);
-    }
+    setItems(editedItems); // Update items with edited data
+    setIsEditing(false);
+  };
+
+  const handleInputChange = (id: number, value: string) => {
+    setEditedItems(
+      editedItems.map((item) =>
+        item.id === id ? { ...item, text: value } : item
+      )
+    );
   };
 
   return (
     <WidgetContainer>
-      <WidgetHeader title="Item List" onEdit={onEdit} onRemove={onRemove} />
+      <WidgetHeader
+        title="Item List"
+        onEdit={handleHeaderEdit} // Internal handler
+        onRemove={onRemove}
+      />
       <ItemList>
         {items.map((item) => (
           <ListItem key={item.id} onClick={() => toggleComplete(item.id)}>
             <ItemText completed={item.completed}>{item.text}</ItemText>
-            <EditButton
-              onClick={(e) => {
-                e.stopPropagation();
-                handleEditClick(item);
-              }}
-            >
-              Edit
-            </EditButton>
           </ListItem>
         ))}
       </ItemList>
-      {isEditing && currentItem && (
+      {isEditing && (
         <EditModal>
-          <EditInput
-            value={currentItem.text}
-            onChange={(e) =>
-              setCurrentItem({ ...currentItem, text: e.target.value })
-            }
-          />
+          {editedItems.map((item) => (
+            <div key={item.id}>
+              <EditInput
+                value={item.text}
+                onChange={(e) => handleInputChange(item.id, e.target.value)}
+              />
+            </div>
+          ))}
           <EditButton onClick={handleEditSave}>Save</EditButton>
           <EditButton onClick={() => setIsEditing(false)}>Cancel</EditButton>
         </EditModal>
