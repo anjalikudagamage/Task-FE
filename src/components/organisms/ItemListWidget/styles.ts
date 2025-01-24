@@ -1,12 +1,8 @@
 import styled from "styled-components";
 
 export const WidgetContainer = styled.div`
-  // background-color: #ffffff;
-  // border: 1px solid #e0e0e0;
-  // border-radius: 8px;
   padding: 16px;
   max-width: 400px;
-  // box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 export const ItemList = styled.ul`
@@ -16,6 +12,8 @@ export const ItemList = styled.ul`
 `;
 
 export const ListItem = styled.li`
+  display: flex;
+  justify-content: space-between;
   padding: 12px 16px;
   margin-bottom: 8px;
   border: 1px solid #f0f0f0;
@@ -33,4 +31,37 @@ export const ItemText = styled.span<{ completed: boolean }>`
   text-decoration: ${({ completed }) => (completed ? "line-through" : "none")};
   color: ${({ completed }) => (completed ? "#a0a0a0" : "#000000")};
   font-size: 16px;
+`;
+
+export const EditButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+export const EditModal = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+export const EditInput = styled.input`
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
 `;
