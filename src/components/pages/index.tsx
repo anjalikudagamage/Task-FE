@@ -1,53 +1,35 @@
 import React, { useState } from "react";
-import GridLayout from "react-grid-layout";
+import { Grid, Paper, Typography } from "@mui/material";
 import { LineChartWidget } from "../organisms/LineChartWidget";
 import { TextBoxWidget } from "../organisms/TextBoxWidget";
 import { ItemListWidget } from "../organisms/ItemListWidget";
 import { Navbar } from "../organisms/Navbar";
-import { DashboardContainer, WidgetArea } from "./styles";
+import { DashboardContainer, DashboardHeaderArea, ImageArea } from "./styles";
+
+type WidgetType = "LineChartWidget" | "TextBoxWidget" | "ItemListWidget";
 
 const DashboardPage: React.FC = () => {
   const [widgets, setWidgets] = useState<
-    { id: string; type: string; area: string }[]
+    { id: string; type: WidgetType; area: string }[]
   >([
-    { id: "lineChart", type: "LineChartWidget", area: "charts" },
-    { id: "textBox", type: "TextBoxWidget", area: "text" },
-    { id: "itemList", type: "ItemListWidget", area: "lists" },
+    { id: "lineChart", type: "LineChartWidget", area: "widgets" },
+    { id: "textBox", type: "TextBoxWidget", area: "widgets" },
+    { id: "itemList", type: "ItemListWidget", area: "widgets" },
   ]);
 
-  type LayoutItem = { i: string; x: number; y: number; w: number; h: number };
-  const [layouts, setLayouts] = useState<{ [key: string]: LayoutItem[] }>({
-    charts: [{ i: "lineChart", x: 0, y: 0, w: 4, h: 3 }],
-    text: [{ i: "textBox", x: 0, y: 0, w: 4, h: 2 }],
-    lists: [{ i: "itemList", x: 0, y: 0, w: 4, h: 2 }],
-  });
-
-  const addWidget = (widgetType: string, area: string): void => {
+  const addWidget = (widgetType: WidgetType): void => {
     const newWidgetId = `widget_${Date.now()}`;
-    const newWidget = { id: newWidgetId, type: widgetType, area };
+    const newWidget = { id: newWidgetId, type: widgetType, area: "widgets" };
     setWidgets([...widgets, newWidget]);
-
-    setLayouts({
-      ...layouts,
-      [area]: [
-        ...(layouts[area] || []),
-        { i: newWidgetId, x: 0, y: Infinity, w: 4, h: 2 },
-      ],
-    });
   };
 
-  const removeWidget = (id: string, area: string): void => {
+  const removeWidget = (id: string): void => {
     setWidgets(widgets.filter((widget) => widget.id !== id));
-    setLayouts({
-      ...layouts,
-      [area]: layouts[area].filter((layout) => layout.i !== id),
-    });
   };
 
   const renderWidget = (widget: {
     id: string;
-    type: string;
-    area: string;
+    type: WidgetType;
   }): JSX.Element | null => {
     switch (widget.type) {
       case "LineChartWidget":
@@ -55,7 +37,7 @@ const DashboardPage: React.FC = () => {
           <div className="widget">
             <LineChartWidget
               onEdit={() => alert(`Editing ${widget.id}`)}
-              onRemove={() => removeWidget(widget.id, widget.area)}
+              onRemove={() => removeWidget(widget.id)}
             />
           </div>
         );
@@ -64,7 +46,7 @@ const DashboardPage: React.FC = () => {
           <div className="widget">
             <TextBoxWidget
               onEdit={() => alert(`Editing ${widget.id}`)}
-              onRemove={() => removeWidget(widget.id, widget.area)}
+              onRemove={() => removeWidget(widget.id)}
             />
           </div>
         );
@@ -73,7 +55,7 @@ const DashboardPage: React.FC = () => {
           <div className="widget">
             <ItemListWidget
               onEdit={() => alert(`Editing ${widget.id}`)}
-              onRemove={() => removeWidget(widget.id, widget.area)}
+              onRemove={() => removeWidget(widget.id)}
             />
           </div>
         );
@@ -84,42 +66,48 @@ const DashboardPage: React.FC = () => {
 
   return (
     <DashboardContainer>
-      <Navbar
-        addWidget={(widgetType: string) => {
-          const area = widgetType.includes("Chart")
-            ? "charts"
-            : widgetType.includes("Text")
-            ? "text"
-            : "lists";
-          addWidget(widgetType, area);
-        }}
-      />
-      {Object.keys(layouts).map((area) => (
-        <WidgetArea key={area}>
-          <h2>{area.charAt(0).toUpperCase() + area.slice(1)}</h2>
-          <GridLayout
-            className="layout"
-            layout={layouts[area]}
-            cols={12}
-            rowHeight={30}
-            width={800}
-            onLayoutChange={(newLayout) =>
-              setLayouts((prev) => ({ ...prev, [area]: newLayout }))
-            }
-          >
-            {widgets
-              .filter((widget) => widget.area === area)
-              .map((widget) => (
-                <div
-                  key={widget.id}
-                  data-grid={layouts[area].find((l) => l.i === widget.id)}
-                >
-                  {renderWidget(widget)}
-                </div>
-              ))}
-          </GridLayout>
-        </WidgetArea>
-      ))}
+      <Navbar addWidget={addWidget} />
+      <Grid container spacing={2}>
+        {/* Left Side - Dashboard name and image */}
+        <Grid item xs={6} spacing={2}>
+          <Grid item xs={12}>
+            <Paper elevation={3}>
+              <DashboardHeaderArea>
+                <Typography variant="h4">Dashboard Name</Typography>
+              </DashboardHeaderArea>
+              <ImageArea>
+                <img
+                  src="path-to-image.jpg"
+                  alt="Dashboard Image"
+                  style={{ width: "100%", height: "auto" }}
+                />
+              </ImageArea>
+            </Paper>
+          </Grid>
+          {/* Line Chart Widget */}
+          <Grid item xs={12}>
+            <Paper elevation={3}>
+              {renderWidget({ id: "lineChart", type: "LineChartWidget" })}
+            </Paper>
+          </Grid>
+        </Grid>
+
+        {/* Right Side - Widgets */}
+        <Grid container item xs={6} spacing={2}>
+          {/* Text Box Widget */}
+          <Grid item xs={12}>
+            <Paper elevation={3}>
+              {renderWidget({ id: "textBox", type: "TextBoxWidget" })}
+            </Paper>
+          </Grid>
+          {/* Item List Widget */}
+          <Grid item xs={12}>
+            <Paper elevation={3}>
+              {renderWidget({ id: "itemList", type: "ItemListWidget" })}
+            </Paper>
+          </Grid>
+        </Grid>
+      </Grid>
     </DashboardContainer>
   );
 };

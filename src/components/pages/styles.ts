@@ -40,3 +40,23 @@ export const WidgetArea = styled.div`
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   }
 `;
+
+export const DashboardHeaderArea = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+`;
+
+export const ImageArea = styled.div`
+  text-align: center;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+`;
