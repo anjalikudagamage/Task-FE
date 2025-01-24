@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Grid, Paper, Typography } from "@mui/material";
+import { ResizableBox } from "react-resizable";
 import { LineChartWidget } from "../organisms/LineChartWidget";
 import { TextBoxWidget } from "../organisms/TextBoxWidget";
 import { ItemListWidget } from "../organisms/ItemListWidget";
 import { Navbar } from "../organisms/Navbar";
 import { DashboardContainer, DashboardHeaderArea, ImageArea } from "./styles";
+import "react-resizable/css/styles.css";
 
 type WidgetType = "LineChartWidget" | "TextBoxWidget" | "ItemListWidget";
 
@@ -12,7 +14,6 @@ const DashboardPage: React.FC = () => {
   const [widgets, setWidgets] = useState<
     { id: string; type: WidgetType; area: string }[]
   >([
-    // Default widgets: LineChart on the left, TextBox and ItemList on the right
     { id: "lineChart1", type: "LineChartWidget", area: "left" },
     { id: "textBox1", type: "TextBoxWidget", area: "right" },
     { id: "itemList1", type: "ItemListWidget", area: "right" },
@@ -32,48 +33,60 @@ const DashboardPage: React.FC = () => {
     setWidgets(widgets.filter((widget) => widget.id !== id));
   };
 
-  const renderWidget = (widget: {
-    id: string;
-    type: WidgetType;
-  }): JSX.Element | null => {
+  const renderWidget = (widget: { id: string; type: WidgetType }) => {
+    let content: JSX.Element | null = null;
+
     switch (widget.type) {
       case "LineChartWidget":
-        return (
-          <div className="widget">
-            <LineChartWidget
-              onEdit={() => alert(`Editing ${widget.id}`)}
-              onRemove={() => removeWidget(widget.id)}
-            />
-          </div>
+        content = (
+          <LineChartWidget
+            onEdit={() => alert(`Editing ${widget.id}`)}
+            onRemove={() => removeWidget(widget.id)}
+          />
         );
+        break;
       case "TextBoxWidget":
-        return (
-          <div className="widget">
-            <TextBoxWidget
-              onEdit={() => alert(`Editing ${widget.id}`)}
-              onRemove={() => removeWidget(widget.id)}
-            />
-          </div>
+        content = (
+          <TextBoxWidget
+            onEdit={() => alert(`Editing ${widget.id}`)}
+            onRemove={() => removeWidget(widget.id)}
+          />
         );
+        break;
       case "ItemListWidget":
-        return (
-          <div className="widget">
-            <ItemListWidget
-              onEdit={() => alert(`Editing ${widget.id}`)}
-              onRemove={() => removeWidget(widget.id)}
-            />
-          </div>
+        content = (
+          <ItemListWidget
+            onEdit={() => alert(`Editing ${widget.id}`)}
+            onRemove={() => removeWidget(widget.id)}
+          />
         );
+        break;
       default:
-        return null;
+        content = null;
     }
+
+    return (
+      <ResizableBox
+        width={350}
+        height={250}
+        minConstraints={[200, 150]}
+        maxConstraints={[600, 500]}
+        resizeHandles={["se"]}
+        className="resizable-widget"
+      >
+        <div style={{ height: "100%", width: "100%", position: "relative" }}>
+          {content}
+          <div className="resize-hint">Drag to resize</div>
+        </div>
+      </ResizableBox>
+    );
   };
 
   return (
     <DashboardContainer>
       <Navbar addWidget={addWidget} />
       <Grid container spacing={2}>
-        {/* Left Side - Dashboard name, image, and LineChart widgets */}
+        {/* Left Side */}
         <Grid item xs={6} spacing={2}>
           <Grid item xs={12}>
             <Paper elevation={3}>
@@ -89,8 +102,6 @@ const DashboardPage: React.FC = () => {
               </ImageArea>
             </Paper>
           </Grid>
-
-          {/* Render LineChartWidgets on the left side */}
           {widgets.map((widget) =>
             widget.area === "left" ? (
               <Grid item xs={12} key={widget.id}>
@@ -99,8 +110,7 @@ const DashboardPage: React.FC = () => {
             ) : null
           )}
         </Grid>
-
-        {/* Right Side - TextBox and ItemList widgets */}
+        {/* Right Side */}
         <Grid container item xs={6} spacing={2}>
           {widgets.map((widget) =>
             widget.area === "right" ? (

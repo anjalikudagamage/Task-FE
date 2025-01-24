@@ -1,0 +1,19 @@
+.resizable-widget {
+  border: 1px dashed #ccc;
+  background: #f9f9f9;
+  position: relative;
+  transition: box-shadow 0.2s ease;
+}
+
+.resizable-widget:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.resize-hint {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  font-size: 12px;
+  color: #888;
+  pointer-events: none;
+}
