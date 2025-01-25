@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Grid, Paper, IconButton, Tooltip } from "@mui/material";
-import { ArrowForward, ArrowBack } from "@mui/icons-material"; // Material UI icons
+import { ArrowForward, ArrowBack, Delete } from "@mui/icons-material"; // Added delete icon
 import { ResizableBox } from "react-resizable";
 import { LineChartWidget } from "../organisms/LineChartWidget";
 import { TextBoxWidget } from "../organisms/TextBoxWidget";
@@ -66,8 +66,8 @@ const DashboardPage: React.FC = () => {
 
     return (
       <ResizableBox
-        width={350}
-        height={250}
+        width={300}
+        height={200}
         minConstraints={[200, 150]}
         maxConstraints={[600, 500]}
         resizeHandles={["se"]}
@@ -75,12 +75,12 @@ const DashboardPage: React.FC = () => {
       >
         <WidgetWrapper>
           {content}
-          <div style={{ marginTop: "10px", textAlign: "center" }}>
+          <div className="action-buttons">
             {/* Move to Left button */}
             <Tooltip title="Move to Left" arrow>
               <IconButton
                 onClick={() => moveWidget(widget.id, "left")}
-                style={{ marginRight: "8px", backgroundColor: "#e3f2fd" }}
+                style={{ backgroundColor: "#e3f2fd" }}
               >
                 <ArrowBack />
               </IconButton>
@@ -95,8 +95,17 @@ const DashboardPage: React.FC = () => {
                 <ArrowForward />
               </IconButton>
             </Tooltip>
+
+            {/* Delete Widget button */}
+            <Tooltip title="Delete" arrow>
+              <IconButton
+                onClick={() => removeWidget(widget.id)}
+                style={{ backgroundColor: "#e57373" }}
+              >
+                <Delete />
+              </IconButton>
+            </Tooltip>
           </div>
-          <div className="resize-hint">Drag to resize</div>
         </WidgetWrapper>
       </ResizableBox>
     );
@@ -107,48 +116,53 @@ const DashboardPage: React.FC = () => {
       <Navbar addWidget={addWidget} />
       <Grid container spacing={2}>
         {/* Left Side */}
-        <Grid item xs={6} style={{ paddingRight: "16px" }}>
-          <Grid item xs={12} style={{ marginBottom: "35px" }}>
+        <Grid item xs={6} style={{ paddingRight: "8px" }}>
+          <Grid item xs={12} style={{ marginBottom: "20px" }}>
             <ImageArea>
               <img
                 src={image}
                 alt="Dashboard Image"
-                style={{ width: "100%", height: "200px" }}
+                style={{ width: "100%", height: "auto" }}
               />
             </ImageArea>
           </Grid>
-          {widgets.map((widget) =>
-            widget.area === "left" ? (
-              <Grid
-                item
-                xs={12}
-                key={widget.id}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: "16px",
-                  marginBottom: "50px",
-                }}
-              >
-                <Paper elevation={3}>{renderWidget(widget)}</Paper>
-              </Grid>
-            ) : null
+          {widgets.map(
+            (widget) =>
+              widget.area === "left" && (
+                <Grid
+                  item
+                  xs={12}
+                  key={widget.id}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginBottom: "20px",
+                  }}
+                >
+                  <Paper elevation={3} style={{ width: "100%" }}>
+                    {renderWidget(widget)}
+                  </Paper>
+                </Grid>
+              )
           )}
         </Grid>
 
         {/* Right Side */}
         <Grid container item xs={6} spacing={2}>
-          {widgets.map((widget) =>
-            widget.area === "right" ? (
-              <Grid
-                item
-                xs={12}
-                key={widget.id}
-                style={{ display: "flex", justifyContent: "center" }}
-              >
-                <Paper elevation={3}>{renderWidget(widget)}</Paper>
-              </Grid>
-            ) : null
+          {widgets.map(
+            (widget) =>
+              widget.area === "right" && (
+                <Grid
+                  item
+                  xs={12}
+                  key={widget.id}
+                  style={{ display: "flex", justifyContent: "center" }}
+                >
+                  <Paper elevation={3} style={{ width: "100%" }}>
+                    {renderWidget(widget)}
+                  </Paper>
+                </Grid>
+              )
           )}
         </Grid>
       </Grid>

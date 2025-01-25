@@ -60,8 +60,16 @@ export const ImageArea = styled.div`
 
 export const WidgetWrapper = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column; // Stack widgets vertically
+  justify-content: flex-start; // Align items to the top
+  align-items: stretch; // Ensure widgets stretch to fit their container
   height: 100%;
   position: relative;
+  margin-bottom: 20px; // Space between widgets
+
+  .resize-hint {
+    font-size: 12px;
+    color: #aaa;
+    text-align: center;
+  }
 `;
