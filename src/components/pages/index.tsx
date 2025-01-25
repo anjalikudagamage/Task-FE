@@ -66,8 +66,8 @@ const DashboardPage: React.FC = () => {
 
     return (
       <ResizableBox
-        width={300}
-        height={200}
+        width={300} // Ensure it's a number
+        height={200} // Ensure it's a number
         minConstraints={[200, 150]}
         maxConstraints={[600, 500]}
         resizeHandles={["se"]}

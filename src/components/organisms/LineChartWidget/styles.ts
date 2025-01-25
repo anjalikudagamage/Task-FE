@@ -2,8 +2,11 @@ import styled from "styled-components";
 
 export const ChartContainer = styled.div`
   max-width: 400px;
+  display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Prevents overflow */
 `;
 
 export const EditModal = styled.div`

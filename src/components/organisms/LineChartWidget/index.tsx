@@ -65,19 +65,21 @@ export const LineChartWidget: React.FC<LineChartWidgetProps> = ({
         onEdit={() => setIsEditing(true)}
         onRemove={onRemove}
       />
-      <LineChart width={350} height={250} data={data}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-        <XAxis dataKey="name" tick={{ fill: "#6b6b6b" }} />
-        <YAxis tick={{ fill: "#6b6b6b" }} />
-        <Tooltip
-          contentStyle={{
-            backgroundColor: "#ffffff",
-            border: "1px solid #e0e0e0",
-          }}
-          itemStyle={{ color: "#333" }}
-        />
-        <Line type="monotone" dataKey="uv" stroke="#8884d8" strokeWidth={2} />
-      </LineChart>
+      <div style={{ height: "300px", overflow: "hidden" }}>
+        <LineChart width={350} height={250} data={data}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+          <XAxis dataKey="name" tick={{ fill: "#6b6b6b" }} />
+          <YAxis tick={{ fill: "#6b6b6b" }} />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: "#ffffff",
+              border: "1px solid #e0e0e0",
+            }}
+            itemStyle={{ color: "#333" }}
+          />
+          <Line type="monotone" dataKey="uv" stroke="#8884d8" strokeWidth={2} />
+        </LineChart>
+      </div>
       {isEditing && (
         <EditModal>
           <EditForm>

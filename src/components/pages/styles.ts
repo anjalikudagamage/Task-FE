@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const DashboardContainer = styled.div`
   background-color: #f5f5f5;
-  padding: 16px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -10,66 +10,70 @@ export const DashboardContainer = styled.div`
   font-family: Arial, sans-serif;
 `;
 
-export const WidgetArea = styled.div`
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
-
-  h2 {
-    font-size: 20px;
-    margin-bottom: 16px;
-    text-align: center;
-    color: #444;
-  }
-
-  .layout {
-    display: flex;
-    flex-wrap: wrap;
-    background: #fafafa;
-    border-radius: 8px;
-    gap: 8px;
-  }
-
-  .widget {
-    background: #fefefe;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  }
-`;
-
-export const DashboardHeaderArea = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  // color: #333;
-  padding: 16px;
-  // background-color: #f5f5f5;
-  // border-radius: 8px;
-`;
-
 export const ImageArea = styled.div`
   img {
+    width: 100%;
+    border-radius: 8px;
     height: auto;
-    margin: 0;
   }
 `;
 
 export const WidgetWrapper = styled.div`
   display: flex;
-  flex-direction: column; // Stack widgets vertically
-  justify-content: flex-start; // Align items to the top
-  align-items: stretch; // Ensure widgets stretch to fit their container
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
   height: 100%;
   position: relative;
-  margin-bottom: 20px; // Space between widgets
+  padding: 12px;
+  background: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+`;
 
-  .resize-hint {
-    font-size: 12px;
-    color: #aaa;
-    text-align: center;
+export const ChartContainer = styled.div`
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const EditModal = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+`;
+
+export const EditForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+export const EditInput = styled.input`
+  margin-left: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+export const EditButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: #0056b3;
   }
 `;
