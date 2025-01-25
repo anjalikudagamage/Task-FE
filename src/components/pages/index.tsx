@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Grid, Paper, IconButton, Tooltip } from "@mui/material";
-import { ArrowForward, ArrowBack, Delete } from "@mui/icons-material"; // Added delete icon
+import { ArrowForward, ArrowBack, Delete } from "@mui/icons-material";
 import { ResizableBox } from "react-resizable";
 import { LineChartWidget } from "../organisms/LineChartWidget";
 import { TextBoxWidget } from "../organisms/TextBoxWidget";
@@ -10,6 +10,7 @@ import { DashboardContainer, ImageArea, WidgetWrapper } from "./styles";
 import image from "../../assets/Images/image1.jpg";
 import "react-resizable/css/styles.css";
 
+// Define the type for widget types
 type WidgetType = "LineChartWidget" | "TextBoxWidget" | "ItemListWidget";
 
 const DashboardPage: React.FC = () => {
@@ -21,7 +22,7 @@ const DashboardPage: React.FC = () => {
     { id: "itemList1", type: "ItemListWidget", area: "right" },
   ]);
 
-  // Add a new widget
+  // Function to add a new widget
   const addWidget = (widgetType: WidgetType): void => {
     const newWidgetId = `widget_${Date.now()}`;
     const newWidget = {
@@ -32,12 +33,12 @@ const DashboardPage: React.FC = () => {
     setWidgets([...widgets, newWidget]);
   };
 
-  // Remove an existing widget
+  // Function to remove a widget by its id
   const removeWidget = (id: string): void => {
     setWidgets(widgets.filter((widget) => widget.id !== id));
   };
 
-  // Move a widget between areas
+  // Function to move a widget to a new area (left or right)
   const moveWidget = (id: string, newArea: string): void => {
     setWidgets((prevWidgets) =>
       prevWidgets.map((widget) =>
@@ -46,10 +47,11 @@ const DashboardPage: React.FC = () => {
     );
   };
 
-  // Render a widget
+  // Function to render the widget based on its type
   const renderWidget = (widget: { id: string; type: WidgetType }) => {
     let content: JSX.Element | null = null;
 
+    // Switch statement to render the appropriate widget
     switch (widget.type) {
       case "LineChartWidget":
         content = <LineChartWidget onRemove={() => removeWidget(widget.id)} />;
@@ -65,9 +67,10 @@ const DashboardPage: React.FC = () => {
     }
 
     return (
+      // ResizableBox component for resizing the widget
       <ResizableBox
-        width={300} // Ensure it's a number
-        height={200} // Ensure it's a number
+        width={300}
+        height={200}
         minConstraints={[200, 150]}
         maxConstraints={[600, 500]}
         resizeHandles={["se"]}
@@ -115,9 +118,10 @@ const DashboardPage: React.FC = () => {
     <DashboardContainer>
       <Navbar addWidget={addWidget} />
       <Grid container spacing={2}>
-        {/* Left Side */}
+        {/* Left Side of the Dashboard */}
         <Grid item xs={6} style={{ paddingRight: "8px" }}>
           <Grid item xs={12} style={{ marginBottom: "20px" }}>
+            {/* Image section on the left side */}
             <ImageArea>
               <img
                 src={image}
@@ -126,6 +130,7 @@ const DashboardPage: React.FC = () => {
               />
             </ImageArea>
           </Grid>
+          {/* Render widgets on the left side */}
           {widgets.map(
             (widget) =>
               widget.area === "left" && (
@@ -147,8 +152,9 @@ const DashboardPage: React.FC = () => {
           )}
         </Grid>
 
-        {/* Right Side */}
+        {/* Right Side of the Dashboard */}
         <Grid container item xs={6} spacing={2}>
+          {/* Render widgets on the right side */}
           {widgets.map(
             (widget) =>
               widget.area === "right" && (

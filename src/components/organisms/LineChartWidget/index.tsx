@@ -16,6 +16,7 @@ import {
   EditButton,
 } from "./styles";
 
+// Type for each data item used in the chart
 type DataItem = {
   name: string;
   uv: number;
@@ -23,11 +24,13 @@ type DataItem = {
   amt: number;
 };
 
+// Initial chart data
 const initialData: DataItem[] = [
   { name: "Page A", uv: 400, pv: 2400, amt: 2400 },
   { name: "Page B", uv: 300, pv: 1398, amt: 2210 },
 ];
 
+// Props type for the LineChartWidget component
 type LineChartWidgetProps = {
   onRemove: () => void;
 };
@@ -39,11 +42,13 @@ export const LineChartWidget: React.FC<LineChartWidgetProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState<DataItem[]>([...initialData]);
 
+  // Save edited data and close the edit modal
   const handleEditSave = () => {
     setData(editedData);
     setIsEditing(false);
   };
 
+  // Handle input change for edited data
   const handleInputChange = (
     index: number,
     field: keyof DataItem,
@@ -51,9 +56,9 @@ export const LineChartWidget: React.FC<LineChartWidgetProps> = ({
   ) => {
     const updatedData = [...editedData];
     if (field === "name") {
-      updatedData[index][field] = value; // For 'name', assign a string
+      updatedData[index][field] = value;
     } else {
-      updatedData[index][field] = parseInt(value, 10); // For 'uv', 'pv', 'amt', assign a number
+      updatedData[index][field] = parseInt(value, 10);
     }
     setEditedData(updatedData);
   };
@@ -65,6 +70,8 @@ export const LineChartWidget: React.FC<LineChartWidgetProps> = ({
         onEdit={() => setIsEditing(true)}
         onRemove={onRemove}
       />
+
+      {/* Render the LineChart with the data */}
       <div style={{ height: "300px", overflow: "hidden" }}>
         <LineChart width={350} height={250} data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
@@ -80,6 +87,8 @@ export const LineChartWidget: React.FC<LineChartWidgetProps> = ({
           <Line type="monotone" dataKey="uv" stroke="#8884d8" strokeWidth={2} />
         </LineChart>
       </div>
+
+      {/* Modal to edit chart data */}
       {isEditing && (
         <EditModal>
           <EditForm>

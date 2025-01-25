@@ -5,8 +5,18 @@ export const useNavbarStyles = () => ({
   },
   toolbar: {
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     padding: "10px 20px",
+  },
+  titleContainer: {
+    flexGrow: 1,
+  },
+  title: {
+    color: "white",
+  },
+  buttonContainer: {
+    display: "flex",
+    gap: "10px",
   },
   button: {
     color: "white",

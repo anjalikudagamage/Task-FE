@@ -12,10 +12,16 @@ import {
 export const TextBoxWidget: React.FC<{
   onRemove: () => void;
 }> = ({ onRemove }) => {
+  // State to manage the text content
   const [text, setText] = useState("Editable Text");
+
+  // State to manage if the widget is in editing mode
   const [isEditing, setIsEditing] = useState(false);
+
+  // State to manage the edited text during the editing process
   const [editedText, setEditedText] = useState(text);
 
+  // Function to save the edited text and exit the editing mode
   const handleEditSave = () => {
     setText(editedText);
     setIsEditing(false);
@@ -25,19 +31,24 @@ export const TextBoxWidget: React.FC<{
     <WidgetContainer>
       <WidgetHeader
         title="Text Box"
-        onEdit={() => setIsEditing(true)} // Internal handling
+        onEdit={() => setIsEditing(true)}
         onRemove={onRemove}
       />
+
+      {/* Textarea to display the current text; read-only until in edit mode */}
       <StyledTextarea
         value={text}
         placeholder="Type something here..."
-        readOnly // Non-editable until in edit mode
+        readOnly
       />
+
+      {/* Modal for editing the text appears only when isEditing is true */}
       {isEditing && (
         <EditModal>
           <EditForm>
             <label>
               Edit Text:
+              {/* Input field for editing the text */}
               <EditInput
                 value={editedText}
                 onChange={(e) => setEditedText(e.target.value)}

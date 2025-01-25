@@ -1,6 +1,7 @@
 import React from "react";
-import { Tooltip } from "react-tooltip"; // Assuming you're using a tooltip library or custom implementation
+import { Tooltip } from "react-tooltip";
 
+// Props type for the Button component
 type ButtonProps = {
   label: string;
   icon?: React.ReactNode;
@@ -15,8 +16,10 @@ export const Button: React.FC<ButtonProps> = ({
   tooltip,
 }) => (
   <button onClick={onClick} className="button">
-    {icon && <span className="icon">{icon}</span>}
-    {label}
-    {tooltip && <Tooltip content={tooltip} />}
+    {icon && <span className="icon">{icon}</span>}{" "}
+    {/* Render icon if provided */}
+    {label} {/* Render button label */}
+    {tooltip && <Tooltip content={tooltip} />}{" "}
+    {/* Render tooltip if provided */}
   </button>
 );
