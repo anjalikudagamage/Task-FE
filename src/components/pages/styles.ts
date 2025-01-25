@@ -52,11 +52,16 @@ export const DashboardHeaderArea = styled.div`
 `;
 
 export const ImageArea = styled.div`
-  text-align: center;
-
   img {
-    max-width: 100%;
     height: auto;
-    border-radius: 8px;
+    margin: 0;
   }
+`;
+
+export const WidgetWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: relative;
 `;

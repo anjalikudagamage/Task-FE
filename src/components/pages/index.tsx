@@ -5,7 +5,7 @@ import { LineChartWidget } from "../organisms/LineChartWidget";
 import { TextBoxWidget } from "../organisms/TextBoxWidget";
 import { ItemListWidget } from "../organisms/ItemListWidget";
 import { Navbar } from "../organisms/Navbar";
-import { DashboardContainer, ImageArea } from "./styles";
+import { DashboardContainer, ImageArea, WidgetWrapper } from "./styles";
 import image from "../../assets/Images/image1.jpg";
 import "react-resizable/css/styles.css";
 
@@ -39,28 +39,13 @@ const DashboardPage: React.FC = () => {
 
     switch (widget.type) {
       case "LineChartWidget":
-        content = (
-          <LineChartWidget
-            // onEdit={() => alert(`Editing ${widget.id}`)}
-            onRemove={() => removeWidget(widget.id)}
-          />
-        );
+        content = <LineChartWidget onRemove={() => removeWidget(widget.id)} />;
         break;
       case "TextBoxWidget":
-        content = (
-          <TextBoxWidget
-            // onEdit={() => alert(`Editing ${widget.id}`)}
-            onRemove={() => removeWidget(widget.id)}
-          />
-        );
+        content = <TextBoxWidget onRemove={() => removeWidget(widget.id)} />;
         break;
       case "ItemListWidget":
-        content = (
-          <ItemListWidget
-            // onEdit={() => alert(`Editing ${widget.id}`)}
-            onRemove={() => removeWidget(widget.id)}
-          />
-        );
+        content = <ItemListWidget onRemove={() => removeWidget(widget.id)} />;
         break;
       default:
         content = null;
@@ -75,10 +60,10 @@ const DashboardPage: React.FC = () => {
         resizeHandles={["se"]}
         className="resizable-widget"
       >
-        <div style={{ height: "100%", width: "100%", position: "relative" }}>
+        <WidgetWrapper>
           {content}
           <div className="resize-hint">Drag to resize</div>
-        </div>
+        </WidgetWrapper>
       </ResizableBox>
     );
   };
@@ -88,31 +73,45 @@ const DashboardPage: React.FC = () => {
       <Navbar addWidget={addWidget} />
       <Grid container spacing={2}>
         {/* Left Side */}
-        <Grid item xs={6} spacing={2}>
-          <Grid item xs={12}>
-            <Paper elevation={3}>
-              <ImageArea>
-                <img
-                  src={image}
-                  alt="Dashboard Image"
-                  style={{ width: "100%", height: "auto", maxHeight: "200px" }}
-                />
-              </ImageArea>
-            </Paper>
+        <Grid item xs={6} style={{ paddingRight: "16px" }}>
+          <Grid item xs={12} style={{ marginBottom: "35px" }}>
+            <ImageArea>
+              <img
+                src={image}
+                alt="Dashboard Image"
+                style={{ width: "100%", height: "200px" }}
+              />
+            </ImageArea>
           </Grid>
           {widgets.map((widget) =>
             widget.area === "left" ? (
-              <Grid item xs={12} key={widget.id}>
+              <Grid
+                item
+                xs={12}
+                key={widget.id}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "16px", // Adds space between the image and widgets
+                  marginBottom: "50px",
+                }}
+              >
                 <Paper elevation={3}>{renderWidget(widget)}</Paper>
               </Grid>
             ) : null
           )}
         </Grid>
+
         {/* Right Side */}
         <Grid container item xs={6} spacing={2}>
           {widgets.map((widget) =>
             widget.area === "right" ? (
-              <Grid item xs={12} key={widget.id}>
+              <Grid
+                item
+                xs={12}
+                key={widget.id}
+                style={{ display: "flex", justifyContent: "center" }}
+              >
                 <Paper elevation={3}>{renderWidget(widget)}</Paper>
               </Grid>
             ) : null
