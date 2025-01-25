@@ -10,6 +10,6 @@ cd dynamic-dashboard
 npm install
 
 # Step 4: Start the development server
-# This will run the app locally at http://localhost:3000
+# This will run the app locally at [http://localhost:3000](http://localhost:5173/)
 npm start
 
