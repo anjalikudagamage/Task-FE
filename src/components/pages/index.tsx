@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Grid, Paper } from "@mui/material";
+import { Grid, Paper, IconButton, Tooltip } from "@mui/material";
+import { ArrowForward, ArrowBack } from "@mui/icons-material"; // Material UI icons
 import { ResizableBox } from "react-resizable";
 import { LineChartWidget } from "../organisms/LineChartWidget";
 import { TextBoxWidget } from "../organisms/TextBoxWidget";
@@ -20,6 +21,7 @@ const DashboardPage: React.FC = () => {
     { id: "itemList1", type: "ItemListWidget", area: "right" },
   ]);
 
+  // Add a new widget
   const addWidget = (widgetType: WidgetType): void => {
     const newWidgetId = `widget_${Date.now()}`;
     const newWidget = {
@@ -30,10 +32,21 @@ const DashboardPage: React.FC = () => {
     setWidgets([...widgets, newWidget]);
   };
 
+  // Remove an existing widget
   const removeWidget = (id: string): void => {
     setWidgets(widgets.filter((widget) => widget.id !== id));
   };
 
+  // Move a widget between areas
+  const moveWidget = (id: string, newArea: string): void => {
+    setWidgets((prevWidgets) =>
+      prevWidgets.map((widget) =>
+        widget.id === id ? { ...widget, area: newArea } : widget
+      )
+    );
+  };
+
+  // Render a widget
   const renderWidget = (widget: { id: string; type: WidgetType }) => {
     let content: JSX.Element | null = null;
 
@@ -62,6 +75,27 @@ const DashboardPage: React.FC = () => {
       >
         <WidgetWrapper>
           {content}
+          <div style={{ marginTop: "10px", textAlign: "center" }}>
+            {/* Move to Left button */}
+            <Tooltip title="Move to Left" arrow>
+              <IconButton
+                onClick={() => moveWidget(widget.id, "left")}
+                style={{ marginRight: "8px", backgroundColor: "#e3f2fd" }}
+              >
+                <ArrowBack />
+              </IconButton>
+            </Tooltip>
+
+            {/* Move to Right button */}
+            <Tooltip title="Move to Right" arrow>
+              <IconButton
+                onClick={() => moveWidget(widget.id, "right")}
+                style={{ backgroundColor: "#e3f2fd" }}
+              >
+                <ArrowForward />
+              </IconButton>
+            </Tooltip>
+          </div>
           <div className="resize-hint">Drag to resize</div>
         </WidgetWrapper>
       </ResizableBox>
@@ -92,7 +126,7 @@ const DashboardPage: React.FC = () => {
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  marginTop: "16px", // Adds space between the image and widgets
+                  marginTop: "16px",
                   marginBottom: "50px",
                 }}
               >
